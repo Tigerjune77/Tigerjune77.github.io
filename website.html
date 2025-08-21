@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Name — Personal Website</title>
+  <meta name="description" content="Researcher in type theory, PL, program analysis, and AI safety. Personal website, publications, projects, and contact." />
+  <meta name="author" content="Your Name" />
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Your Name — Personal Website" />
+  <meta property="og:description" content="Researcher in type theory, PL, program analysis, and AI safety." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://your-domain.example" />
+  <meta property="og:image" content="https://your-domain.example/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style>
+    /* ===== Design tokens ===== */
+    :root {
+      --bg: #0b0c10;
+      --fg: #e6e6e6;
+      --muted: #a7abb3;
+      --card: #15171c;
+      --accent: #6ee7ff;
+      --accent-2: #a78bfa; /* soft purple */
+      --border: #23262d;
+      --maxw: 1100px;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --fg: #0f172a;
+        --muted: #475569;
+        --card: #ffffff;
+        --accent: #0ea5e9;
+        --accent-2: #7c3aed;
+        --border: #e2e8f0;
+      }
+    }
+
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Apple SD Gothic Neo, "Malgun Gothic", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #0b0c10; font-weight: 700; border: 0; padding: .8rem 1.1rem;
+      border-radius: 999px; box-shadow: var(--shadow); text-decoration: none;
+    }
+    .btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border); box-shadow: none; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .pill { display:inline-block; border:1px solid var(--border); color:var(--muted); padding:.25rem .6rem; border-radius:999px; font-size:.85rem }
+
+    /* ===== Nav ===== */
+    header {
+      position: sticky; top: 0; backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg), transparent 20%);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav a.brand { color: var(--fg); font-weight: 800; letter-spacing: .2px; }
+    .nav ul { list-style: none; display: flex; gap: 1.2rem; margin: 0; padding: 0; }
+    .nav a:hover { text-decoration: none; opacity:.85 }
+    .menu-btn { display:none; }
+    @media (max-width: 860px) {
+      .nav ul { display: none; }
+      .menu-btn { display:inline-flex; gap:.5rem; align-items:center; border:1px solid var(--border); padding:.45rem .7rem; border-radius:10px; background:transparent; color:var(--fg); }
+      #mobile-menu { display:none; }
+      #mobile-menu.open { display:block; }
+      #mobile-menu a { display:block; padding: .9rem 0; border-bottom: 1px dashed var(--border); }
+      header { backdrop-filter: none; }
+    }
+
+    /* ===== Hero ===== */
+    .hero { padding: 100px 0 60px; position: relative; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; margin: 0 0 10px; }
+    .hero p.lead { font-size: clamp(1.05rem, 2.5vw, 1.25rem); color: var(--muted); margin: 0 0 24px; }
+    .hero .actions { display: flex; gap: .7rem; flex-wrap: wrap; }
+
+    /* ===== Sections ===== */
+    section { padding: 60px 0; }
+    section h2 { font-size: clamp(1.4rem, 2.3vw, 1.8rem); margin: 0 0 20px; }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: start; }
+    .about img { width: 100%; border-radius: var(--radius); border:1px solid var(--border); }
+    @media (max-width: 860px){ .about { grid-template-columns: 1fr; } }
+
+    /* Projects */
+    .grid { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 1024px){ .grid { grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 640px){ .grid { grid-template-columns: 1fr;} }
+    .project { padding: 18px; }
+    .project h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .project p { margin: 0 0 10px; color: var(--muted); }
+
+    /* Publications */
+    .pub { padding: 16px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: start; }
+    .pub b { font-weight: 700; }
+
+    /* Contact */
+    .contact .card { padding: 22px; }
+
+    /* Footer */
+    footer { padding: 40px 0; color: var(--muted); border-top:1px solid var(--border); }
+
+    /* Tiny chips */
+    .chips { display:flex; gap:6px; flex-wrap: wrap; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <!-- ===== Header / Nav ===== -->
+  <header>
+    <div class="container nav">
+      <a href="#top" class="brand">Your Name</a>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><button id="themeToggle" class="btn ghost" aria-label="Toggle dark mode">🌗 Theme</button></li>
+        </ul>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-controls="mobile-menu" aria-expanded="false">☰ Menu</button>
+    </div>
+    <div class="container" id="mobile-menu" role="navigation" aria-label="Mobile">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+      <a href="#" id="themeToggleMobile">🌗 Theme</a>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <main id="top" class="container">
+    <section class="hero">
+      <span class="pill">Type Theory · PL · Program Analysis · AI Safety</span>
+      <h1>Hi, I’m <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">Your Name</span>.</h1>
+      <p class="lead">I’m a researcher interested in dependent type theory, programming languages, compilers, verification, and trustworthy AI. I enjoy building reliable systems where <em>proofs meet programs</em>.</p>
+      <div class="actions">
+        <a class="btn" href="#projects">See Projects</a>
+        <a class="btn ghost" href="/cv.pdf">Download CV</a>
+        <a class="btn ghost" href="mailto:you@example.com">Email me</a>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about">
+      <h2>About</h2>
+      <div class="about">
+        <div class="card" style="padding:22px;">
+          <p>
+            I’m currently studying type theory and verification. My broader interests include category theory
+            for PL, static analysis and fuzzing, and using formal methods to build trustworthy ML systems.
+          </p>
+          <p>
+            Recently, I’ve been exploring how <b>dependent type theory</b> connects to proof assistants (Lean, Coq) and
+            how <b>program analysis</b> techniques can provide <i>formal guarantees</i> for AI components in safety-critical contexts.
+          </p>
+          <div class="chips">
+            <span class="pill">Lean</span>
+            <span class="pill">Coq</span>
+            <span class="pill">OCaml</span>
+            <span class="pill">LLVM / MLIR</span>
+            <span class="pill">Static Analysis</span>
+            <span class="pill">RAG</span>
+          </div>
+        </div>
+        <div>
+          <img src="https://picsum.photos/640/420" alt="Portrait or banner" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects">
+      <h2>Selected Projects</h2>
+      <div class="grid">
+        <article class="card project">
+          <h3>Rel-LLM (Relational Prompts for RAG)</h3>
+          <p>GNN-encoded relational subgraphs to structure prompts for LLMs in RAG, preserving entity relations and temporal dependencies.</p>
+          <div class="chips">
+            <span class="pill">GNN</span>
+            <span class="pill">RAG</span>
+            <span class="pill">Type-Safe Pipelines</span>
+          </div>
+        </article>
+        <article class="card project">
+          <h3>Half-Hop: Enhanced Message Passing</h3>
+          <p>Graph augmentation that inserts slow nodes on edges to improve over-squashing and generalization in GNNs.</p>
+          <div class="chips">
+            <span class="pill">GNN</span>
+            <span class="pill">Graph Augmentation</span>
+          </div>
+        </article>
+        <article class="card project">
+          <h3>Type-Theoretic Verifier for Diffusion Pipelines</h3>
+          <p>Shallowly-embedded DSL in OCaml/Lean to specify safety contracts for diffusion model steps; extracts runtime monitors.</p>
+          <div class="chips">
+            <span class="pill">Type Theory</span>
+            <span class="pill">OCaml</span>
+            <span class="pill">Formal Methods</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Publications ===== -->
+    <section id="publications">
+      <h2>Publications & Writing</h2>
+      <div class="card pub">
+        <div>
+          <b>[Preprint]</b> Anomaly Detection in Relational Databases via Temporal GNNs
+          <div class="muted">Your Name, et al. (2025)</div>
+        </div>
+        <div><a class="pill" href="#">PDF</a></div>
+      </div>
+      <div class="card pub" style="margin-top:12px;">
+        <div>
+          <b>Notes</b> Adjoint Sensitivity in Neural ODEs — from first principles
+          <div class="muted">Your Name (2025)</div>
+        </div>
+        <div><a class="pill" href="#">Post</a></div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <div class="card">
+        <p>For collaborations, feel free to reach out:</p>
+        <p>Email: <a href="mailto:you@example.com">you@example.com</a> · GitHub: <a href="#">@yourhandle</a> · LinkedIn: <a href="#">Profile</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Your Name. Built with vanilla HTML/CSS. <span class="muted">Seoul, KR</span>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle (persist via localStorage)
+    (function(){
+      const key = 'prefers-theme';
+      const apply = (mode)=>{
+        if(mode==='light'){ document.documentElement.style.colorScheme='light'; }
+        else if(mode==='dark'){ document.documentElement.style.colorScheme='dark'; }
+        else { document.documentElement.style.colorScheme='normal'; }
+      };
+      const saved = localStorage.getItem(key);
+      if(saved) apply(saved);
+      function toggle(){
+        const current = localStorage.getItem(key);
+        const next = current==='dark' ? 'light' : 'dark';
+        localStorage.setItem(key, next); apply(next);
+      }
+      document.getElementById('themeToggle').addEventListener('click', toggle);
+      const mobile = document.getElementById('themeToggleMobile');
+      if(mobile) mobile.addEventListener('click', function(e){ e.preventDefault(); toggle(); });
+    })();
+
+    // Mobile menu
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const menu = document.getElementById('mobile-menu');
+      if(!btn || !menu) return;
+      btn.addEventListener('click', ()=>{
+        const open = menu.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    })();
+  </script>
+
+  <!-- Schema.org (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Your Name",
+    "url": "https://your-domain.example",
+    "jobTitle": "Researcher",
+    "affiliation": {"@type":"Organization","name":"Your Institution"},
+    "sameAs": ["https://github.com/yourhandle", "https://www.linkedin.com/in/yourhandle/"]
+  }
+  </script>
+
+  <!-- (Optional) Analytics placeholder -->
+  <!-- <script defer data-domain="your-domain.example" src="https://plausible.io/js/script.js"></script> -->
+</body>
+</html>
