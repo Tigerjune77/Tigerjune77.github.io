@@ -133,7 +133,6 @@
           <li><a href="#projects">Projects</a></li>
           <li><a href="#publications">Publications</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><button id="themeToggle" class="btn ghost" aria-label="Toggle dark mode">🌗 Theme</button></li>
         </ul>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-controls="mobile-menu" aria-expanded="false">☰ Menu</button>
@@ -143,7 +142,6 @@
       <a href="#projects">Projects</a>
       <a href="#publications">Publications</a>
       <a href="#contact">Contact</a>
-      <a href="#" id="themeToggleMobile">🌗 Theme</a>
     </div>
   </header>
 
@@ -261,42 +259,6 @@
       © <span id="year"></span> Hojune Lee. Built with vanilla HTML/CSS. <span class="muted">Daejeon, KR</span>
     </div>
   </footer>
-
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Theme toggle (persist via localStorage)
-    (function(){
-      const key = 'prefers-theme';
-      const apply = (mode)=>{
-        if(mode==='light'){ document.documentElement.style.colorScheme='light'; }
-        else if(mode==='dark'){ document.documentElement.style.colorScheme='dark'; }
-        else { document.documentElement.style.colorScheme='normal'; }
-      };
-      const saved = localStorage.getItem(key);
-      if(saved) apply(saved);
-      function toggle(){
-        const current = localStorage.getItem(key);
-        const next = current==='dark' ? 'light' : 'dark';
-        localStorage.setItem(key, next); apply(next);
-      }
-      document.getElementById('themeToggle').addEventListener('click', toggle);
-      const mobile = document.getElementById('themeToggleMobile');
-      if(mobile) mobile.addEventListener('click', function(e){ e.preventDefault(); toggle(); });
-    })();
-
-    // Mobile menu
-    (function(){
-      const btn = document.getElementById('menuBtn');
-      const menu = document.getElementById('mobile-menu');
-      if(!btn || !menu) return;
-      btn.addEventListener('click', ()=>{
-        const open = menu.classList.toggle('open');
-        btn.setAttribute('aria-expanded', String(open));
-      });
-    })();
-  </script>
 
   <!-- Schema.org (JSON-LD) -->
   <script type="application/ld+json">
